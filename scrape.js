@@ -41,9 +41,9 @@ const limit = 200;
   let products = []
 
   let productPageIndex = 1;
-  for (const productPage of productPages) {
+  for (const productPageUrl of productPages) {
     console.log(`Parsing product page ${productPageIndex}/${productPages.length}`)
-    await page.goto(productPage)
+    await page.goto(productPageUrl)
 
     const productOverviewInfo = await page.$$eval('.Overview-panel .para-list', (elements) =>
       elements.map((element) => element.innerText)
@@ -58,7 +58,8 @@ const limit = 200;
       size: productOverviewInfo[1].split('インチ')[0],
       memory: productOverviewInfo[2],
       disk: productOverviewInfo[3],
-      keyboard
+      keyboard,
+      url: productPageUrl
     })
 
     productPageIndex++;
@@ -76,6 +77,7 @@ const limit = 200;
       {id: 'memory', title: 'Memory'},
       {id: 'disk', title: 'Disk'},
       {id: 'keyboard', title: 'Keyboard'},
+      {id: 'url', title: 'URL'}
     ]
   });
 
